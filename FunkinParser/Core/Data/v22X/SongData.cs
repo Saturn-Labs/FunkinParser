@@ -29,8 +29,8 @@ namespace Funkin.Core.Data.v22X
         public string TimeFormat { get; set; } = "ms";
         [JsonProperty("timeChanges")]
         public SongTimeChange[] TimeChanges { get; set; } = Array.Empty<SongTimeChange>();
-        [JsonIgnore] 
-        public string Variation = "default";
+        [JsonConverter(typeof(WriteIgnore))]
+        public string Variation { get; set; } = "default";
         
         public object Clone()
         {
@@ -87,6 +87,11 @@ namespace Funkin.Core.Data.v22X
                     return attr.PropertyName == key;
                 }
             ) is {};
+        }
+        
+        public override string ToString()
+        {
+            return $"SongMetadata({SongName} by {Artist}, variation {Variation})";
         }
     }
 

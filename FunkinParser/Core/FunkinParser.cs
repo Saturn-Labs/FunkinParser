@@ -21,7 +21,7 @@ namespace Funkin.Core
             AddMetadataType<Data.v20X.SongData>(VersionRange.Parse("[2.0.0,2.1.0)"));
             AddMetadataType<Data.v21X.SongData>(VersionRange.Parse("[2.1.0,2.2.0)"));
             AddMetadataType<Data.v22X.SongData>(VersionRange.Parse("[2.2.0,2.3.0)"));
-            AddChartDataType<Data.v22X.SongChartData>(VersionRange.Parse("[2.0.0,2.3.0)"));
+            AddChartDataType<Data.v20X.SongChartData>(VersionRange.Parse("[2.0.0,2.3.0)"));
         }
         
         public FunkinParser(string metadataJsonText, string chartJsonText)
