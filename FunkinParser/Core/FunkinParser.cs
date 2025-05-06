@@ -99,7 +99,7 @@ namespace Funkin.Core
                 return null;
             
             var latestMetadata = data;
-            while (latestMetadata.GetType().GetInterfaces().FirstOrDefault(i => i.Name.StartsWith("IVersionConvertible")) != null)
+            while (latestMetadata.GetType().GetInterfaces().FirstOrDefault(i => i.Name.StartsWith("IVersionConvertible")) is not null)
             {
                 var converted = latestMetadata.GetType().GetMethod("Convert")?.Invoke(latestMetadata, Array.Empty<object>());
                 if (converted is null)
@@ -115,7 +115,7 @@ namespace Funkin.Core
                 return null;
             
             var latestMetadata = data;
-            while (latestMetadata.GetType().GetInterfaces().FirstOrDefault(i => i.Name.StartsWith("IVersionConvertible")) != null)
+            while (latestMetadata.GetType().GetInterfaces().FirstOrDefault(i => i.Name.StartsWith("IVersionConvertible")) is not null)
             {
                 var converted = latestMetadata.GetType().GetMethod("Convert")?.Invoke(latestMetadata, Array.Empty<object>());
                 if (converted is null)
@@ -125,8 +125,10 @@ namespace Funkin.Core
             return latestMetadata as SongData;
         }
 
-        public static ISongPack<SongData, SongChartData>? ConvertToLatest(ISongPack<VersioningData, VersioningData> data)
+        public static ISongPack<SongData, SongChartData>? ConvertToLatest(ISongPack<VersioningData, VersioningData>? data)
         {
+            if (data is null)
+                return null;
             var metadata = data.Metadata;
             var chart = data.Chart;
             if (chart is null)
