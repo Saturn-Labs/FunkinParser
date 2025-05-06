@@ -4,11 +4,14 @@ using System.Linq;
 using System.Reflection;
 using Funkin.Converters;
 using Newtonsoft.Json;
+using NuGet.Versioning;
 
-namespace Funkin.Core.Data.v22X
+namespace Funkin.Core.Data.Latest
 {
     public class SongData : VersioningData, IData, ICloneable<SongData>
     {
+        public static readonly NuGetVersion DefaultVersion = new("2.2.4");
+        
         [JsonProperty("songName")]
         public string SongName { get; set; } = "Unknown";
         [JsonProperty("artist")]
@@ -31,9 +34,13 @@ namespace Funkin.Core.Data.v22X
         public SongTimeChange[] TimeChanges { get; set; } = Array.Empty<SongTimeChange>();
         [JsonConverter(typeof(WriteIgnore))]
         public string Variation { get; set; } = "default";
+
+        public SongData()
+        {
+            Version = DefaultVersion;
+        }
         
-        public SongData() { }
-        public SongData(string songName, string artist, string variation)
+        public SongData(string songName, string artist, string variation) : this()
         {
             SongName = songName;
             Artist = artist;
@@ -70,7 +77,7 @@ namespace Funkin.Core.Data.v22X
             {
                 if (p.Name == key)
                     return true;
-                if (!(p.GetCustomAttribute<JsonPropertyAttribute>() is {} attr))
+                if (p.GetCustomAttribute<JsonPropertyAttribute>() is not {} attr)
                     return false;
                 return attr.PropertyName == key;
             });
@@ -79,7 +86,7 @@ namespace Funkin.Core.Data.v22X
 
         public T GetValue<T>(string key)
         {
-            if (!(GetValue(key) is T value))
+            if (GetValue(key) is not T value)
                 throw new InvalidCastException($"Failed to cast key '{key}' value to type '{typeof(T).Name}'.");
             return value;
         }
@@ -94,7 +101,7 @@ namespace Funkin.Core.Data.v22X
                         return false;
                     return attr.PropertyName == key;
                 }
-            ) is {};
+            ) is not null;
         }
         
         public override string ToString()

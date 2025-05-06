@@ -7,16 +7,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NuGet.Versioning;
 
-namespace Funkin.Core.Data.v20X
+namespace Funkin.Core.Data.Latest
 {
     public class SongChartData : VersioningData, IData, ICloneable<SongChartData>
     {
+        public static readonly NuGetVersion DefaultVersion = new("2.0.0");
+        
         [JsonProperty("scrollSpeed")]
-        public Dictionary<string, float> ScrollSpeed { get; set; } = new Dictionary<string, float>();
+        public Dictionary<string, float> ScrollSpeed { get; set; } = new();
         [JsonProperty("events")]
         public SongEventData[] Events { get; set; } = Array.Empty<SongEventData>();
         [JsonProperty("notes")] 
-        public Dictionary<string, SongNoteData[]> Notes { get; set; } = new Dictionary<string, SongNoteData[]>();
+        public Dictionary<string, SongNoteData[]> Notes { get; set; } = new();
         [JsonProperty("generatedBy")] 
         public string GeneratedBy { get; set; } = "Unknown";
         [JsonIgnore] 
@@ -24,7 +26,7 @@ namespace Funkin.Core.Data.v20X
 
         public SongChartData()
         {
-            Version = NuGetVersion.Parse("2.0.0");
+            Version = DefaultVersion;
         }
         
         public SongChartData(Dictionary<string, float> scrollSpeed, SongEventData[] events, Dictionary<string, SongNoteData[]> notes) : this()
@@ -43,7 +45,7 @@ namespace Funkin.Core.Data.v20X
             {
                 if (p.Name == key)
                     return true;
-                if (!(p.GetCustomAttribute<JsonPropertyAttribute>() is {} attr))
+                if (p.GetCustomAttribute<JsonPropertyAttribute>() is not {} attr)
                     return false;
                 return attr.PropertyName == key;
             });
@@ -52,7 +54,7 @@ namespace Funkin.Core.Data.v20X
 
         public T GetValue<T>(string key)
         {
-            if (!(GetValue(key) is T value))
+            if (GetValue(key) is not T value)
                 throw new InvalidCastException($"Failed to cast key '{key}' value to type '{typeof(T).Name}'.");
             return value;
         }
@@ -67,7 +69,7 @@ namespace Funkin.Core.Data.v20X
                         return false;
                     return attr.PropertyName == key;
                 }
-            ) is {};
+            ) is not null;
         }
 
         public SongChartData Clone()

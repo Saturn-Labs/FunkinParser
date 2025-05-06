@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Funkin.Converters;
-using Funkin.Core.Data.v20X;
+using Funkin.Core.Data.Latest;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NuGet.Versioning;
 
 namespace Funkin.Core.Data.v10X
 {
-    public class SongChartData : VersioningData, IData, IVersionConvertible<v20X.SongChartData>, ICloneable<SongChartData>
+    public class SongChartData : VersioningData, IData, IVersionConvertible<Latest.SongChartData>, ICloneable<SongChartData>
     {
+        public static readonly NuGetVersion DefaultVersion = new("1.0.0");
+        
         [JsonProperty("song")]
         public SongData Song { get; set; } = new SongData();
         
         public SongChartData()
         {
-            Version = NuGetVersion.Parse("1.0.0");
+            Version = DefaultVersion;
         }
         
-        private static readonly PropertyInfo[] PropertiesCache = typeof(v20X.SongChartData).GetProperties();
+        private static readonly PropertyInfo[] PropertiesCache = typeof(Latest.SongChartData).GetProperties();
         public object? this[string key] => GetValue(key);
 
         public object? GetValue(string key)
@@ -29,7 +31,7 @@ namespace Funkin.Core.Data.v10X
             {
                 if (p.Name == key)
                     return true;
-                if (!(p.GetCustomAttribute<JsonPropertyAttribute>() is {} attr))
+                if (p.GetCustomAttribute<JsonPropertyAttribute>() is not {} attr)
                     return false;
                 return attr.PropertyName == key;
             });
@@ -56,7 +58,7 @@ namespace Funkin.Core.Data.v10X
             ) is {};
         }
 
-        public v20X.SongChartData Convert()
+        public Latest.SongChartData Convert()
         {
             var notes = Song.Notes.SelectMany(n => n.SectionNotes).Select(n => new SongNoteData()
             {
@@ -69,10 +71,10 @@ namespace Funkin.Core.Data.v10X
                 },
                 Kind = "default"
             }).GroupBy(o => "normal").ToDictionary(o => o.Key, o => o.ToArray());
-            return new v20X.SongChartData()
+            return new Latest.SongChartData()
             {
                 Events = Array.Empty<SongEventData>(),
-                GeneratedBy = "Conversion on FunkinParser made by ryd3v.",
+                GeneratedBy = $"FunkinParser conversion [1.0.0 -> {Latest.SongChartData.DefaultVersion.ToNormalizedString()}]",
                 Notes = notes,
                 ScrollSpeed = new Dictionary<string, float>
                 {

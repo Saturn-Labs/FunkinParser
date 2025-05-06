@@ -1604,7 +1604,7 @@ class Program
 }");
 
         //var metadata = parser.ParseMetadata();
-        var chart = parser.ParseChartData();
-        IData newChart = FunkinParser.ConvertToLatestChartData((VersioningData)chart);
+        var pack = parser.Parse();
+        var newPack = FunkinParser.ConvertToLatest(pack);
     }
 }

@@ -10,6 +10,8 @@ namespace Funkin.Core.Data.v20X
 {
     public class SongData : VersioningData, IData, ICloneable<SongData>, IVersionConvertible<v21X.SongData>
     {
+        public static readonly NuGetVersion DefaultVersion = new("2.0.0");
+        
         [JsonProperty("songName")]
         public string SongName { get; set; } = "Unknown";
         [JsonProperty("artist")]
@@ -30,6 +32,18 @@ namespace Funkin.Core.Data.v20X
         public SongTimeChange[] TimeChanges { get; set; } = Array.Empty<SongTimeChange>();
         public string Variation { get; set; } = "default";
 
+        public SongData()
+        {
+            Version = DefaultVersion;
+        }
+        
+        public SongData(string songName, string artist, string variation) : this()
+        {
+            SongName = songName;
+            Artist = artist;
+            Variation = variation;
+        }
+        
         public object Clone()
         {
             var res = new SongData
@@ -59,7 +73,7 @@ namespace Funkin.Core.Data.v20X
             {
                 if (p.Name == key)
                     return true;
-                if (!(p.GetCustomAttribute<JsonPropertyAttribute>() is {} attr))
+                if (p.GetCustomAttribute<JsonPropertyAttribute>() is not {} attr)
                     return false;
                 return attr.PropertyName == key;
             });
@@ -68,7 +82,7 @@ namespace Funkin.Core.Data.v20X
 
         public T GetValue<T>(string key)
         {
-            if (!(GetValue(key) is T value))
+            if (GetValue(key) is not T value)
                 throw new InvalidCastException($"Failed to cast key '{key}' value to type '{typeof(T).Name}'.");
             return value;
         }
@@ -79,18 +93,17 @@ namespace Funkin.Core.Data.v20X
                 {
                     if (p.Name == key)
                         return true;
-                    if (!(p.GetCustomAttribute<JsonPropertyAttribute>() is { } attr))
+                    if (p.GetCustomAttribute<JsonPropertyAttribute>() is not { } attr)
                         return false;
                     return attr.PropertyName == key;
                 }
-            ) is {};
+            ) is not null;
         }
 
         public v21X.SongData Convert()
         {
             return new v21X.SongData(SongName, Artist, Variation)
             {
-                Version = NuGetVersion.Parse("2.1.0"),
                 TimeFormat = TimeFormat,
                 Divisions = Divisions,
                 TimeChanges = TimeChanges.Select(t => t.Convert()).ToArray(),
@@ -111,33 +124,47 @@ namespace Funkin.Core.Data.v20X
         [JsonProperty("timeStamp")]
         [JsonConverter(typeof(WriteIgnore))]
         public float TimeStamp { get; set; } = 0f;
-        public float t { get => TimeStamp; set => TimeStamp = value; }
-        
+        public float t
+        {
+            get => TimeStamp; 
+            set => TimeStamp = value;
+        }
         [JsonProperty("beatTime")]
         [JsonConverter(typeof(WriteIgnore))]
         public float? BeatTime { get; set; } = 0f;
-        public float? b { get => BeatTime; set => BeatTime = value; }
-        
+        public float? b
+        {
+            get => BeatTime; 
+            set => BeatTime = value;
+        }
         [JsonProperty("bpm")] 
         public float Bpm { get; set; } = 0f;
-        
         [JsonProperty("timeSignatureNum")]
         [JsonConverter(typeof(WriteIgnore))]
         public int TimeSignatureNum { get; set; } = 4;
-        public int n { get => TimeSignatureNum; set => TimeSignatureNum = value; }
-        
+        public int n
+        {
+            get => TimeSignatureNum;
+            set => TimeSignatureNum = value;
+        }
         [JsonProperty("timeSignatureDen")]
         [JsonConverter(typeof(WriteIgnore))]
         public int TimeSignatureDen { get; set; } = 4;
-        public int d { get => TimeSignatureDen; set => TimeSignatureDen = value; }
-        
+        public int d
+        {
+            get => TimeSignatureDen; 
+            set => TimeSignatureDen = value;
+        }
         [JsonProperty("beatTuplets")]
         [JsonConverter(typeof(WriteIgnore))]
         public int[] BeatTuplets { get; set; } = Array.Empty<int>();
-        public int[] bt { get => BeatTuplets; set => BeatTuplets = value; }
+        public int[] bt
+        {
+            get => BeatTuplets; 
+            set => BeatTuplets = value;
+        }
         
         public SongTimeChange() { }
-
         public SongTimeChange(float ts, float bpm, int tsn = 4, int tsd = 4, float? b = null, int[]? bt = null)
         {
             TimeStamp = ts;
@@ -145,7 +172,7 @@ namespace Funkin.Core.Data.v20X
             TimeSignatureNum = tsn;
             TimeSignatureDen = tsd;
             BeatTime = b;
-            BeatTuplets = bt ?? new int[] { 4, 4, 4, 4 };
+            BeatTuplets = bt ?? new[] { 4, 4, 4, 4 };
         }
         
         public object Clone()
@@ -176,7 +203,7 @@ namespace Funkin.Core.Data.v20X
         [JsonProperty("difficulties")]
         public string[] Difficulties { get; set; } = Array.Empty<string>();
         [JsonProperty("playableChars")]
-        public Dictionary<string, SongPlayableChar> PlayableChars { get; set; } = new Dictionary<string, SongPlayableChar>();   
+        public Dictionary<string, SongPlayableChar> PlayableChars { get; set; } = new();   
         [JsonProperty("stage")]
         public string Stage { get; set; } = string.Empty;
         [JsonProperty("noteSkin")]

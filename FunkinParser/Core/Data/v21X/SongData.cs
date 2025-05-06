@@ -8,8 +8,10 @@ using NuGet.Versioning;
 
 namespace Funkin.Core.Data.v21X
 {
-    public class SongData : VersioningData, IData, ICloneable<SongData>, IVersionConvertible<v22X.SongData>
+    public class SongData : VersioningData, IData, ICloneable<SongData>, IVersionConvertible<Latest.SongData>
     {
+        public static readonly NuGetVersion DefaultVersion = new("2.1.0");
+        
         [JsonProperty("songName")]
         public string SongName { get; set; } = "Unknown";
         [JsonProperty("artist")]
@@ -31,8 +33,12 @@ namespace Funkin.Core.Data.v21X
         [JsonConverter(typeof(WriteIgnore))]
         public string Variation { get; set; } = "default";
         
-        public SongData() { }
-        public SongData(string songName, string artist, string variation)
+        public SongData()
+        {
+            Version = DefaultVersion;
+        }
+        
+        public SongData(string songName, string artist, string variation) : this()
         {
             SongName = songName;
             Artist = artist;
@@ -95,16 +101,15 @@ namespace Funkin.Core.Data.v21X
             ) is {};
         }
 
-        public v22X.SongData Convert()
+        public Latest.SongData Convert()
         {
-            return new v22X.SongData(SongName, Artist, Variation)
+            return new Latest.SongData(SongName, Artist, Variation)
             {
-                Version = NuGetVersion.Parse("2.2.4"),
                 TimeFormat = TimeFormat,
                 Divisions = Divisions,
                 TimeChanges = TimeChanges.Select(t => t.Convert()).ToArray(),
                 Looped = Looped,
-                PlayData = PlayData?.Convert() ?? new v22X.SongPlayData(),
+                PlayData = PlayData?.Convert() ?? new Latest.SongPlayData(),
                 GeneratedBy = GeneratedBy
             };
         }
@@ -115,7 +120,7 @@ namespace Funkin.Core.Data.v21X
         }
     }
 
-    public class SongTimeChange : ICloneable<SongTimeChange>, IVersionConvertible<v22X.SongTimeChange>
+    public class SongTimeChange : ICloneable<SongTimeChange>, IVersionConvertible<Latest.SongTimeChange>
     {
         [JsonProperty("timeStamp")]
         [JsonConverter(typeof(WriteIgnore))]
@@ -167,9 +172,9 @@ namespace Funkin.Core.Data.v21X
             return (SongTimeChange)Clone();
         }
 
-        public v22X.SongTimeChange Convert()
+        public Latest.SongTimeChange Convert()
         {
-            return new v22X.SongTimeChange(TimeStamp, Bpm, TimeSignatureNum, TimeSignatureDen, BeatTime, BeatTuplets);
+            return new Latest.SongTimeChange(TimeStamp, Bpm, TimeSignatureNum, TimeSignatureDen, BeatTime, BeatTuplets);
         }
 
         public override string ToString()
@@ -178,7 +183,7 @@ namespace Funkin.Core.Data.v21X
         }
     }
 
-    public class SongPlayData : ICloneable<SongPlayData>, IVersionConvertible<v22X.SongPlayData>
+    public class SongPlayData : ICloneable<SongPlayData>, IVersionConvertible<Latest.SongPlayData>
     {
         [JsonProperty("songVariations")]
         public string[] SongVariations { get; set; } = Array.Empty<string>();
@@ -217,9 +222,9 @@ namespace Funkin.Core.Data.v21X
             return (SongPlayData)Clone();
         }
 
-        public v22X.SongPlayData Convert()
+        public Latest.SongPlayData Convert()
         {
-            return new v22X.SongPlayData()
+            return new Latest.SongPlayData()
             {
                 SongVariations = (string[])SongVariations.Clone(),
                 Difficulties = (string[])Difficulties.Clone(),
@@ -243,7 +248,7 @@ namespace Funkin.Core.Data.v21X
         }
     }
 
-    public class SongCharacterData : ICloneable<SongCharacterData>, IVersionConvertible<v22X.SongCharacterData>
+    public class SongCharacterData : ICloneable<SongCharacterData>, IVersionConvertible<Latest.SongCharacterData>
     {
         [JsonProperty("player")]
         public string Player { get; set; } = string.Empty;
@@ -287,9 +292,9 @@ namespace Funkin.Core.Data.v21X
             return (SongCharacterData)Clone();
         }
 
-        public v22X.SongCharacterData Convert()
+        public Latest.SongCharacterData Convert()
         {
-            return new v22X.SongCharacterData()
+            return new Latest.SongCharacterData()
             {
                 Player = Player,
                 Girlfriend = Girlfriend,
