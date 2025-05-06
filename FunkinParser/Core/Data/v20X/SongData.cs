@@ -4,10 +4,11 @@ using System.Linq;
 using System.Reflection;
 using Funkin.Converters;
 using Newtonsoft.Json;
+using NuGet.Versioning;
 
 namespace Funkin.Core.Data.v20X
 {
-    public class SongData : VersioningData, IData, ICloneable<SongData>
+    public class SongData : VersioningData, IData, ICloneable<SongData>, IVersionConvertible<v21X.SongData>
     {
         [JsonProperty("songName")]
         public string SongName { get; set; } = "Unknown";
@@ -85,13 +86,27 @@ namespace Funkin.Core.Data.v20X
             ) is {};
         }
 
+        public v21X.SongData Convert()
+        {
+            return new v21X.SongData(SongName, Artist, Variation)
+            {
+                Version = NuGetVersion.Parse("2.1.0"),
+                TimeFormat = TimeFormat,
+                Divisions = Divisions,
+                TimeChanges = TimeChanges.Select(t => t.Convert()).ToArray(),
+                Looped = Looped,
+                PlayData = PlayData?.Convert() ?? new v21X.SongPlayData(),
+                GeneratedBy = GeneratedBy
+            };
+        }
+
         public override string ToString()
         {
             return $"SongMetadata[LEGACY:v2.2.0]({SongName} by {Artist}, variation {Variation})";
         }
     }
 
-    public class SongTimeChange : ICloneable<SongTimeChange>
+    public class SongTimeChange : ICloneable<SongTimeChange>, IVersionConvertible<v21X.SongTimeChange>
     {
         [JsonProperty("timeStamp")]
         [JsonConverter(typeof(WriteIgnore))]
@@ -142,14 +157,19 @@ namespace Funkin.Core.Data.v20X
         {
             return (SongTimeChange)Clone();
         }
-        
+
+        public v21X.SongTimeChange Convert()
+        {
+            return new v21X.SongTimeChange(TimeStamp, Bpm, TimeSignatureNum, TimeSignatureDen, BeatTime, BeatTuplets);
+        }
+
         public override string ToString()
         {
             return $"SongTimeChange({TimeStamp}ms,{Bpm}bpm)";
         }
     }
 
-    public class SongPlayData : ICloneable<SongPlayData>
+    public class SongPlayData : ICloneable<SongPlayData>, IVersionConvertible<v21X.SongPlayData>
     {
         [JsonProperty("songVariations")]
         public string[] SongVariations { get; set; } = Array.Empty<string>();
@@ -178,7 +198,8 @@ namespace Funkin.Core.Data.v20X
                 Stage = Stage,
                 NoteSkin = NoteSkin,
                 PreviewStart = PreviewStart,
-                PreviewEnd = PreviewEnd
+                PreviewEnd = PreviewEnd,
+                StickerPack = StickerPack
             };
             return res;
         }
@@ -186,6 +207,27 @@ namespace Funkin.Core.Data.v20X
         SongPlayData ICloneable<SongPlayData>.Clone()
         {
             return (SongPlayData)Clone();
+        }
+
+        public v21X.SongPlayData Convert()
+        {
+            var characterData = new v21X.SongCharacterData("bf", "gf", "dad");
+            PlayableChars.FirstOrDefault().Deconstruct(out var firstCharKey, out var firstCharData);
+            if (firstCharKey != null && firstCharData != null)
+            {
+                characterData = new v21X.SongCharacterData(firstCharKey, firstCharData.Girlfriend, firstCharData.Opponent, firstCharData.Inst);
+            }
+            return new v21X.SongPlayData()
+            {
+                SongVariations = (string[])SongVariations.Clone(),
+                Difficulties = (string[])Difficulties.Clone(),
+                Stage = Stage,
+                NoteSkin = NoteSkin,
+                PreviewStart = PreviewStart,
+                PreviewEnd = PreviewEnd,
+                StickerPack = StickerPack,
+                Characters = characterData,
+            };
         }
 
         public override string ToString()

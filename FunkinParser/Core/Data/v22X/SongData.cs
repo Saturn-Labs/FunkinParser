@@ -32,6 +32,14 @@ namespace Funkin.Core.Data.v22X
         [JsonConverter(typeof(WriteIgnore))]
         public string Variation { get; set; } = "default";
         
+        public SongData() { }
+        public SongData(string songName, string artist, string variation)
+        {
+            SongName = songName;
+            Artist = artist;
+            Variation = variation;
+        }
+        
         public object Clone()
         {
             var res = new SongData

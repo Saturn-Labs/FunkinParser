@@ -77,5 +77,24 @@ namespace Funkin.Core
         {
             CompleteChartDataTypes[versionRange] = type;
         }
+
+        public static Data.v22X.SongData? ConvertToLatestMetadata(VersioningData data)
+        {
+            if (!(data is Data.v20X.SongData || data is Data.v21X.SongData || data is Data.v22X.SongData))
+                return null;
+            
+            if (VersionRange.Parse("[2.2.0,2.3.0)").Satisfies(data.Version))
+                return data as Data.v22X.SongData;
+            
+            var latestMetadata = data;
+            while (latestMetadata.GetType().GetInterfaces().Contains(typeof(IVersionConvertible<>)))
+            {
+                var converted = latestMetadata.GetType().GetMethod("Convert")?.Invoke(latestMetadata, Array.Empty<object>());
+                if (converted is null)
+                    return null;
+                latestMetadata = (converted as VersioningData)!;
+            }
+            return latestMetadata as Data.v22X.SongData;
+        }
     }
 }
