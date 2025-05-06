@@ -7,6 +7,6 @@ namespace Funkin.Core.Data
     public class VersioningData
     {
         [JsonConverter(typeof(SemVersionConverter))]
-        public NuGetVersion Version { get; set; } = NuGetVersion.Parse("2.2.4");
+        public NuGetVersion Version { get; set; } = NuGetVersion.Parse("1.0.0");
     }
 }

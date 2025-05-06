@@ -21,11 +21,14 @@ namespace Funkin.Core.Data.v20X
         public string GeneratedBy { get; set; } = "Unknown";
         [JsonIgnore] 
         public string Variation { get; set; } = "default";
-        
-        public SongChartData() { }
-        public SongChartData(Dictionary<string, float> scrollSpeed, SongEventData[] events, Dictionary<string, SongNoteData[]> notes)
+
+        public SongChartData()
         {
             Version = NuGetVersion.Parse("2.0.0");
+        }
+        
+        public SongChartData(Dictionary<string, float> scrollSpeed, SongEventData[] events, Dictionary<string, SongNoteData[]> notes) : this()
+        {
             ScrollSpeed = scrollSpeed;
             Events = events;
             Notes = notes;

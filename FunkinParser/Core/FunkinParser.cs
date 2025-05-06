@@ -22,6 +22,7 @@ namespace Funkin.Core
             AddMetadataType<Data.v21X.SongData>(VersionRange.Parse("[2.1.0,2.2.0)"));
             AddMetadataType<Data.v22X.SongData>(VersionRange.Parse("[2.2.0,2.3.0)"));
             AddChartDataType<Data.v20X.SongChartData>(VersionRange.Parse("[2.0.0,2.3.0)"));
+            AddChartDataType<Data.v10X.SongChartData>(VersionRange.Parse("[1.0.0,2.0.0)"));
         }
         
         public FunkinParser(string metadataJsonText, string chartJsonText)
@@ -78,6 +79,25 @@ namespace Funkin.Core
             CompleteChartDataTypes[versionRange] = type;
         }
 
+        public static Data.v20X.SongChartData? ConvertToLatestChartData(VersioningData data)
+        {
+            if (!(data is Data.v20X.SongChartData || data is Data.v10X.SongChartData))
+                return null;
+            
+            if (VersionRange.Parse("[2.0.0,2.1.0)").Satisfies(data.Version))
+                return data as Data.v20X.SongChartData;
+            
+            var latestMetadata = data;
+            while (latestMetadata.GetType().GetInterfaces().FirstOrDefault(i => i.Name.StartsWith("IVersionConvertible")) != null)
+            {
+                var converted = latestMetadata.GetType().GetMethod("Convert")?.Invoke(latestMetadata, Array.Empty<object>());
+                if (converted is null)
+                    return null;
+                latestMetadata = (converted as VersioningData)!;
+            }
+            return latestMetadata as Data.v20X.SongChartData;
+        }
+
         public static Data.v22X.SongData? ConvertToLatestMetadata(VersioningData data)
         {
             if (!(data is Data.v20X.SongData || data is Data.v21X.SongData || data is Data.v22X.SongData))
@@ -87,7 +107,7 @@ namespace Funkin.Core
                 return data as Data.v22X.SongData;
             
             var latestMetadata = data;
-            while (latestMetadata.GetType().GetInterfaces().Contains(typeof(IVersionConvertible<>)))
+            while (latestMetadata.GetType().GetInterfaces().FirstOrDefault(i => i.Name.StartsWith("IVersionConvertible")) != null)
             {
                 var converted = latestMetadata.GetType().GetMethod("Convert")?.Invoke(latestMetadata, Array.Empty<object>());
                 if (converted is null)
