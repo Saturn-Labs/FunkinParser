@@ -1,11 +1,9 @@
-﻿using Funkin.Core;
-using Funkin.Core.Data;
-
+﻿
 namespace Tests;
 
-class Program
+internal static class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         
     }
