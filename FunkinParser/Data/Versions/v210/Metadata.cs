@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using Funkin.Data.Attributes;
 using Funkin.Data.Converters;
+using Funkin.Data.Versions.Latest;
 using Funkin.Utils.Interfaces;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NuGet.Versioning;
 
-namespace Funkin.Data.Latest
+namespace Funkin.Data.Versions.v210
 {
     /// <summary>
     /// Data containing information about a song.
@@ -15,100 +18,113 @@ namespace Funkin.Data.Latest
     /// Data which is only necessary in-game should be stored in the ChartData.
     /// </summary>
     [Serializable]
-    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public class Metadata : VersionStamp, ICloneable<Metadata>, IMetadata
+    [MetadataDescriptor("2.1.0", "[2.1.0,2.2.0)")]
+    public class Metadata : MetadataBase, ICloneable<Metadata>, IConvertible<Latest.Metadata>
     {
         /// <summary>
-        /// The default version of the metadata.
+        /// Determines whether the specified property should be serialized (Called via reflection for each member with <see cref="PredicateIgnoreAttribute"/>).
         /// </summary>
-        public static readonly string DefaultVersion = "2.2.4";
-
+        /// <param name="propertyInfo"><see cref="JsonPropertyInfo"/> of that specified property.</param>
+        /// <param name="instance">Instance of the current class.</param>
+        /// <param name="value">Value of the property.</param>
+        /// <returns>If that property should be serialized.</returns>
+        public static bool ShouldSerialize(JsonPropertyInfo propertyInfo, Metadata instance, object? value)
+        {
+            return propertyInfo.Name switch
+            {
+                "variation" => false,
+                _ => true
+            };
+        }
+        
         /// <summary>
-        /// The version range supported by this metadata.
+        /// Determines whether the specified property should be deserialized (Called via reflection for each member with <see cref="PredicateIgnoreAttribute"/>).
         /// </summary>
-        public static readonly string VersionRange = "[2.2.0,2.3.0)";
+        /// <param name="propertyInfo"><see cref="JsonPropertyInfo"/> of that specified property.</param>
+        /// <param name="instance">Instance of the current class.</param>
+        /// <param name="value">Value of the property.</param>
+        /// <returns>If that property should be deserialized.</returns>
+        public static bool ShouldDeserialize(JsonPropertyInfo propertyInfo, Metadata instance, object? value)
+        {
+            return propertyInfo.Name switch
+            {
+                _ => true
+            };
+        }
 
         /// <summary>
         /// The name of the song.
         /// </summary>
-        [JsonProperty("songName")]
+        [JsonPropertyName("songName")]
         public string SongName { get; set; } = "Unknown";
 
         /// <summary>
         /// The artist of the song.
         /// </summary>
-        [JsonProperty("artist")]
+        [JsonPropertyName("artist")]
         public string Artist { get; set; } = "Unknown";
 
         /// <summary>
         /// The charter of the song.
         /// </summary>
-        [JsonProperty("charter")]
+        [JsonPropertyName("charter")]
         public string? Charter { get; set; }
 
         /// <summary>
         /// The number of divisions in the song.
         /// </summary>
-        [JsonProperty("divisions")]
+        [JsonPropertyName("divisions")]
         public int? Divisions { get; set; } = 96;
 
         /// <summary>
         /// Indicates whether the song is looped.
         /// </summary>
-        [JsonProperty("looped")]
+        [JsonPropertyName("looped")]
         public bool Looped { get; set; }
-
-        /// <summary>
-        /// Instrumental and vocal offsets.
-        /// Defaults to an empty Offsets object.
-        /// </summary>
-        [JsonProperty("offsets")]
-        public Offsets Offsets { get; set; } = new();
 
         /// <summary>
         /// Data relating to the song's gameplay.
         /// </summary>
-        [JsonProperty("playData")]
+        [JsonPropertyName("playData")]
         public PlayData PlayData { get; set; } = new();
 
         /// <summary>
         /// The generator of this metadata.
         /// </summary>
-        [JsonProperty("generatedBy")]
+        [JsonPropertyName("generatedBy")]
         public string GeneratedBy { get; set; }
 
         /// <summary>
         /// The time format used in the metadata.
         /// </summary>
-        [JsonProperty("timeFormat")]
+        [JsonPropertyName("timeFormat")]
         [JsonConverter(typeof(TimeFormatConverter))]
         public TimeFormat TimeFormat { get; set; } = TimeFormat.Milliseconds;
 
         /// <summary>
         /// The time changes in the song.
         /// </summary>
-        [JsonProperty("timeChanges")]
+        [JsonPropertyName("timeChanges")]
         public TimeChange[] TimeChanges { get; set; } = Array.Empty<TimeChange>();
 
         /// <summary>
         /// The variation of the song.
         /// </summary>
-        [JsonProperty("variation")]
-        [JsonConverter(typeof(WriteIgnoreConverter))]
+        [JsonPropertyName("variation")]
+        [PredicateIgnore]
         public string Variation { get; set; } = "default";
 
         /// <summary>
         /// Additional extension data.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, JToken>? ExtensionData { get; set; }
+        public IDictionary<string, JsonElement>? ExtensionData { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the Metadata class with default values.
         /// </summary>
         public Metadata()
         {
-            Version = NuGetVersion.Parse(DefaultVersion);
             GeneratedBy = $"FunkinParser - v{Version}";
         }
 
@@ -124,7 +140,6 @@ namespace Funkin.Data.Latest
             Artist = artist;
             TimeFormat = TimeFormat.Milliseconds;
             Divisions = null;
-            Offsets = new Offsets();
             TimeChanges = new[]
             {
                 new TimeChange(0, 100)
@@ -136,7 +151,7 @@ namespace Funkin.Data.Latest
                 Difficulties = Array.Empty<string>(),
                 Characters = new CharacterData("bf", "gf", "dad"),
                 Stage = "mainStage",
-                NoteStyle = "funkin"
+                NoteSkin = "funkin"
             };
             Variation = variation;
         }
@@ -149,14 +164,12 @@ namespace Funkin.Data.Latest
         {
             return new Metadata(SongName, Artist, Variation)
             {
-                Version = Version,
                 TimeFormat = TimeFormat,
                 Divisions = Divisions,
-                Offsets = Offsets,
                 TimeChanges = TimeChanges.Select(c => c.CloneTyped()).ToArray(),
                 Looped = Looped,
-                PlayData = PlayData,
-                GeneratedBy = GeneratedBy
+                PlayData = PlayData.CloneTyped(),
+                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>()),
             };
         }
 
@@ -169,13 +182,35 @@ namespace Funkin.Data.Latest
             return CloneTyped();
         }
 
+        public bool TryConvert(out Latest.Metadata? result)
+        {
+            if (!PlayData.TryConvert(out var playData))
+            {
+                result = null;
+                return false;
+            }
+            
+            result = new Latest.Metadata(SongName, Artist, Variation)
+            {
+                TimeFormat = TimeFormat,
+                Divisions = Divisions,
+                TimeChanges = TimeChanges.Select(c => c.CloneTyped()).ToArray(),
+                Looped = Looped,
+                PlayData = playData,
+                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>()),
+                // Added Offsets since v2.2.1
+                Offsets = new Offsets()
+            };
+            return true;
+        }
+
         /// <summary>
         /// Produces a string representation suitable for debugging.
         /// </summary>
         /// <returns>A string representation of the Metadata.</returns>
         public override string ToString()
         {
-            return $"SongMetadata({SongName} by {Artist}, variation {Variation})";
+            return $"SongMetadata[LEGACY:v2.1.0]({SongName} by {Artist}, variation {Variation})";
         }
     }
 }

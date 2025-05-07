@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkinParser", "FunkinParser\FunkinParser.csproj", "{1B39F1CD-FB27-4237-87D4-A8A92C6D88D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{51776054-DD1C-4506-B5AE-44E0D8789761}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F39B4490-87BC-47DC-9A69-60F82B838C07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{1B39F1CD-FB27-4237-87D4-A8A92C6D88D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B39F1CD-FB27-4237-87D4-A8A92C6D88D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B39F1CD-FB27-4237-87D4-A8A92C6D88D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51776054-DD1C-4506-B5AE-44E0D8789761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51776054-DD1C-4506-B5AE-44E0D8789761}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51776054-DD1C-4506-B5AE-44E0D8789761}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51776054-DD1C-4506-B5AE-44E0D8789761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F39B4490-87BC-47DC-9A69-60F82B838C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F39B4490-87BC-47DC-9A69-60F82B838C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F39B4490-87BC-47DC-9A69-60F82B838C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F39B4490-87BC-47DC-9A69-60F82B838C07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

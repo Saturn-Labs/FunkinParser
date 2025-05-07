@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Funkin.Utils.Interfaces;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-namespace Funkin.Data.Latest
+namespace Funkin.Data.Versions.Latest
 {
     /// <summary>
     /// Offsets to apply to the song's instrumental and vocals, relative to the chart.
@@ -15,7 +15,6 @@ namespace Funkin.Data.Latest
     /// after these offsets and intended to correct for the user's hardware.
     /// </summary>
     [Serializable]
-    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class Offsets : ICloneable<Offsets>
     {
         /// <summary>
@@ -24,34 +23,38 @@ namespace Funkin.Data.Latest
         /// Setting this to <c>-5000.0</c> means the chart starts 5 seconds into the song.
         /// Setting this to <c>5000.0</c> means there will be 5 seconds of silence before the song starts.
         /// </summary>
-        [JsonProperty("instrumental")]
+        [JsonPropertyName("instrumental")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public float Instrumental { get; set; }
 
         /// <summary>
         /// Apply different offsets to different alternate instrumentals.
         /// </summary>
-        [JsonProperty("altInstrumentals")]
+        [JsonPropertyName("altInstrumentals")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Dictionary<string, float>? AltInstrumentals { get; set; }
 
         /// <summary>
         /// The offset, in milliseconds, to apply to the song's vocals, relative to the song's base instrumental.
         /// These are applied ON TOP OF the instrumental offset.
         /// </summary>
-        [JsonProperty("vocals")]
+        [JsonPropertyName("vocals")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Dictionary<string, float>? Vocals { get; set; }
 
         /// <summary>
         /// The offset, in milliseconds, to apply to the song's vocals, relative to each alternate instrumental.
         /// This is useful for the circumstance where, for example, an alt instrumental has a few seconds of lead-in before the song starts.
         /// </summary>
-        [JsonProperty("altVocals")]
+        [JsonPropertyName("altVocals")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Dictionary<string, Dictionary<string, float>>? AltVocals { get; set; }
 
         /// <summary>
         /// Additional extension data.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, JToken>? ExtensionData { get; set; }
+        public IDictionary<string, JsonElement>? ExtensionData { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Offsets"/> class with default or specified values.
@@ -139,7 +142,7 @@ namespace Funkin.Data.Latest
                     outer => outer.Key,
                     outer => new Dictionary<string, float>(outer.Value)
                 ),
-                ExtensionData = new Dictionary<string, JToken>(ExtensionData ?? new Dictionary<string, JToken>())
+                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>())
             };
         }
 
@@ -158,7 +161,39 @@ namespace Funkin.Data.Latest
         /// <returns>A string representation of the <see cref="Offsets"/> instance.</returns>
         public override string ToString()
         {
-            return $"SongOffsets({Instrumental}ms, {JsonConvert.SerializeObject(AltInstrumentals)}, {JsonConvert.SerializeObject(Vocals)}, {JsonConvert.SerializeObject(AltVocals)})";
+            return $"SongOffsets({Instrumental}ms, {JsonSerializer.Serialize(AltInstrumentals)}, {JsonSerializer.Serialize(Vocals)}, {JsonSerializer.Serialize(AltVocals)})";
+        }
+
+        public bool IsDefault()
+        {
+            return this == new Offsets();
+        }
+        
+        public static bool operator ==(Offsets left, Offsets right)
+        {
+            return Equals(left, right);
+        }
+        
+        public static bool operator !=(Offsets left, Offsets right)
+        {
+            return !Equals(left, right);
+        }
+        
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as Offsets);
+        }
+
+        protected bool Equals(Offsets? other)
+        {
+            if (other is null) 
+                return false;
+            return Instrumental.Equals(other.Instrumental) && Equals(AltInstrumentals, other.AltInstrumentals) && Equals(Vocals, other.Vocals) && Equals(AltVocals, other.AltVocals) && Equals(ExtensionData, other.ExtensionData);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Instrumental, AltInstrumentals, Vocals, AltVocals, ExtensionData);
         }
     }
 }

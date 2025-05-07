@@ -1,21 +1,16 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using NuGet.Versioning;
 
 namespace Funkin.Data.Converters
 {
-    public class VersionConverter : JsonConverter
+    public class VersionConverter : JsonConverter<NuGetVersion>
     {
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType) => objectType == typeof(NuGetVersion);
+        public override NuGetVersion? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (value is null)
-                return;
-            writer.WriteValue(value.ToString());
-        }
-
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-        {
-            var versionString = reader.Value as string;
+            var versionString = reader.GetString();
             try
             {
                 return versionString is null ? null : NuGetVersion.Parse(versionString);
@@ -27,6 +22,9 @@ namespace Funkin.Data.Converters
             return null;
         }
 
-        public override bool CanConvert(Type objectType) => objectType == typeof(NuGetVersion);
+        public override void Write(Utf8JsonWriter writer, NuGetVersion value, JsonSerializerOptions options)
+        {
+            JsonSerializer.Serialize(writer, value.ToNormalizedString(), options);
+        }
     }
 }

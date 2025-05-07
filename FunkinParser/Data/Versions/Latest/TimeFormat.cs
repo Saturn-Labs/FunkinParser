@@ -1,4 +1,4 @@
-﻿namespace Funkin.Data.Latest
+﻿namespace Funkin.Data.Versions.Latest
 {
     public enum TimeFormat
     {

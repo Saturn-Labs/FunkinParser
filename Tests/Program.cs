@@ -1,17 +1,21 @@
 ﻿
 using Funkin.Data;
+using Funkin.Data.Versions.Latest;
+using Funkin.Utils.Interfaces;
 
-namespace Tests;
-
-internal static class Program
+namespace Tests
 {
-    private static void Main(string[] args)
+    internal static class Program
     {
-        var metadata = Converter.DeserializeMetadata(File.ReadAllText("./metadata.json"));
-        Console.WriteLine(metadata);
-        var casted = (Funkin.Data.Latest.Metadata)metadata;
-        casted.TimeChanges[0].TimeStamp = 487;
-        Console.WriteLine(Converter.SerializeMetadata(casted));
-        Console.ReadKey();
+        private static void Main(string[] args)
+        {
+            var metadata = Converter.DeserializeMetadata(File.ReadAllText("./metadata.json"));
+            if (metadata is IConvertible<Metadata> convertible)
+            {
+                convertible.TryConvert(out var newMetadata);
+                Console.WriteLine($"Old Metadata: {metadata}");
+                Console.WriteLine($"New Metadata: {newMetadata}");
+            }
+        }
     }
 }
