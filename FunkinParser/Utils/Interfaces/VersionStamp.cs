@@ -1,4 +1,5 @@
 ﻿using System;
+using Funkin.Data.Converters;
 using Newtonsoft.Json;
 using NuGet.Versioning;
 
@@ -9,9 +10,9 @@ namespace Funkin.Utils.Interfaces
     {
         /**
          * A semantic versioning for the data format.
-         *
          */
         [JsonProperty("version")]
+        [JsonConverter(typeof(VersionConverter))]
         public NuGetVersion Version { get; protected set; }
 
         protected VersionStamp()

@@ -7,6 +7,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Funkin.Data.Latest
 {
+    [Serializable]
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class CharacterData : ICloneable<CharacterData>
     {
         [JsonProperty("player")]
@@ -20,15 +22,29 @@ namespace Funkin.Data.Latest
         
         [JsonProperty("instrumental")]
         public string Instrumental { get; set; }
-        
+
         [JsonProperty("altInstrumentals")]
-        public string[] AltInstrumentals { get; set; }
+        public string[]? AltInstrumentals { get; set; } = null;
         
         [JsonProperty("opponentVocals")]
-        public string[]? OpponentVocals { get; set; } = null;
-        
+        private string[]? _OpponentVocals = null;
+
+        [JsonIgnore]
+        public string[]? OpponentVocals
+        {
+            get => _OpponentVocals ?? new[] { Opponent };
+            set => _OpponentVocals = value;
+        }
+
         [JsonProperty("playerVocals")]
-        public string[]? PlayerVocals { get; set; } = null;
+        private string[]? _PlayerVocals { get; set; } = null;
+
+        [JsonIgnore]
+        public string[]? PlayerVocals
+        {
+            get => _PlayerVocals ?? new[] { Player };
+            set => _PlayerVocals = value;
+        }
         
         [JsonExtensionData]
         public IDictionary<string, JToken>? ExtensionData { get; set; }
@@ -39,16 +55,16 @@ namespace Funkin.Data.Latest
             Girlfriend = girlfriend;
             Opponent = opponent;
             Instrumental = instrumental;
-            AltInstrumentals = altInstrumentals ?? Array.Empty<string>();
-            OpponentVocals = opponentVocals ?? new[] { opponent };
-            PlayerVocals = playerVocals ?? new[] { player };
+            AltInstrumentals = altInstrumentals;
+            OpponentVocals = opponentVocals;
+            PlayerVocals = playerVocals;
         }
         
         public CharacterData CloneTyped()
         {
             return new CharacterData(Player, Girlfriend, Opponent, Instrumental)
             {
-                AltInstrumentals = (string[])AltInstrumentals.Clone()
+                AltInstrumentals = (string[]?)AltInstrumentals?.Clone()
             };
         }
 

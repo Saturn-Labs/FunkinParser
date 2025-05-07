@@ -6,87 +6,87 @@ using Newtonsoft.Json.Linq;
 
 namespace Funkin.Data.Latest
 {
+    /// <summary>
+    /// Contains gameplay-related data for a song.
+    /// This includes information about variations, difficulties, characters, and other gameplay-specific settings.
+    /// </summary>
+    [Serializable]
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class PlayData : ICloneable<PlayData>
     {
-        /**
-         * The variations this song has. The associated metadata files should exist.
-         */
+        /// <summary>
+        /// The variations of the song available for gameplay.
+        /// </summary>
         [JsonProperty("songVariations")]
-        public string[] SongVariations { get; set; } = Array.Empty<string>();
-        
-        /**
-         * The difficulties contained in this song's chart file.
-         */
+        public string[]? SongVariations { get; set; } = null;
+
+        /// <summary>
+        /// The difficulties available for the song.
+        /// </summary>
         [JsonProperty("difficulties")]
         public string[] Difficulties { get; set; } = Array.Empty<string>();
-        
-        /**
-         * The characters used by this song.
-         */
+
+        /// <summary>
+        /// The characters involved in the song's gameplay.
+        /// </summary>
         [JsonProperty("characters")]
         public CharacterData Characters { get; set; } = new();
-        
-        /**
-         * The stage used by this song.
-         */
-        [JsonProperty("stage")]
-        public string Stage { get; set; } = string.Empty;
-        
-        /**
-         * The note style used by this song.
-         */
-        [JsonProperty("noteStyle")]
-        public string NoteStyle { get; set; } = string.Empty;
 
-        /**
-         * The difficulty ratings for this song as displayed in Freeplay.
-         * Key is a difficulty ID.
-         */
+        /// <summary>
+        /// The stage where the song is played.
+        /// </summary>
+        [JsonProperty("stage")]
+        public string Stage { get; set; } = "mainStage";
+
+        /// <summary>
+        /// The note style used in the song.
+        /// </summary>
+        [JsonProperty("noteStyle")]
+        public string NoteStyle { get; set; } = "funkin";
+
+        /// <summary>
+        /// The ratings for the song, categorized by difficulty or other criteria.
+        /// </summary>
         [JsonProperty("ratings")]
         public Dictionary<string, int> Ratings { get; set; } = new();
-        
-        /**
-         * The album ID for the album to display in Freeplay.
-         * If `null`, display no album.
-         */
+
+        /// <summary>
+        /// The album associated with the song, if any.
+        /// </summary>
         [JsonProperty("album")]
         public string? Album { get; set; }
-        
-        /**
-         * The sticker pack for the song to use during transitions.
-         * If `null`, display the character's sticker pack.
-         */
-        [JsonProperty("stickerPack")]
-        public string? StickerPack { get; set; }
 
-        /**
-         * <summary>
-         * The start time for the audio preview in Freeplay.
-         * Defaults to 0 seconds in.
-         * </summary>
-         * <since>2.2.2</since>
-         */
+        /// <summary>
+        /// The start time for the audio preview in Freeplay.
+        /// Defaults to 0 seconds in.
+        /// </summary>
+        /// <since>2.2.2</since>
         [JsonProperty("previewStart")]
         public int PreviewStart { get; set; }
-        
-        /**
-         * <summary>
-         * The end time for the audio preview in Freeplay.
-         * Defaults to 15 seconds in.
-         * </summary>
-         * <since>2.2.2</since>
-         */
+
+        /// <summary>
+        /// The end time for the audio preview in Freeplay.
+        /// Defaults to 15 seconds in.
+        /// </summary>
+        /// <since>2.2.2</since>
         [JsonProperty("previewEnd")]
         public int PreviewEnd { get; set; } = 15000;
-        
+
+        /// <summary>
+        /// Additional extension data.
+        /// </summary>
         [JsonExtensionData]
         public IDictionary<string, JToken>? ExtensionData { get; set; }
-        
+
+        /// <summary>
+        /// Creates a deep copy of this <see cref="PlayData"/> instance.
+        /// </summary>
+        /// <returns>A new <see cref="PlayData"/> instance with the same data.</returns>
         public PlayData CloneTyped()
         {
             return new PlayData
             {
-                SongVariations = (string[])SongVariations.Clone(),
+                SongVariations = (string[]?)SongVariations?.Clone(),
                 Difficulties = (string[])Difficulties.Clone(),
                 Characters = Characters.CloneTyped(),
                 Stage = Stage,
@@ -99,6 +99,10 @@ namespace Funkin.Data.Latest
             };
         }
 
+        /// <summary>
+        /// Creates a deep copy of this <see cref="PlayData"/> instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
             return CloneTyped();
