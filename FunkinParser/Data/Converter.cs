@@ -19,7 +19,7 @@ namespace Funkin.Data
         private static readonly Dictionary<VersionRange, Type> _ChartDataTypesForVersionRanges = new();
         private static readonly JsonSerializerOptions _SerializerOptions = new()
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             TypeInfoResolver = new DefaultJsonTypeInfoResolver()
             {
                 Modifiers =

@@ -10,15 +10,16 @@ namespace Tests
     {
         private static void Main(string[] args)
         {
-            var metadata = Converter.DeserializeMetadata(File.ReadAllText("./metadata.json"));
-            if (metadata is IConvertible<Metadata> convertible)
+            var legacyChart = Converter.DeserializeChartData(File.ReadAllText("./legacy-chart.json"));
+            if (legacyChart is IConvertible<Metadata, ChartData> convertible)
             {
-                var newMetadata = convertible.Convert();
-                Console.WriteLine($"Old Metadata: {metadata}");
-                Console.WriteLine($"New Metadata: {newMetadata}");
+                var (meta, chart) = convertible.Convert();
+                Console.WriteLine($"Legacy Chart: {legacyChart}");
+                Console.WriteLine($"New Metadata: {meta}");
+                Console.WriteLine($"New Chart: {chart}");
+                Console.WriteLine($"Converted Metadata: {Converter.Serialize(meta)}");
+                Console.WriteLine($"Converted Chart: {Converter.Serialize(chart)}");
             }
-
-            var (meta, chart) = new Funkin.Data.Versions.v100.Chart.ChartData().Convert();
         }
     }
 }

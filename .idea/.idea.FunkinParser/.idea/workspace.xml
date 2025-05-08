@@ -9,16 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2ec85a75-a52e-4141-88e7-48020889e9a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/ChartData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/ChartData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Note.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Note.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/Metadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/Metadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayableChar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayableChar.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/Metadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/Metadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/PlayData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/PlayData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Utils/Interfaces/IConvertible.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Utils/Interfaces/IConvertible.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Converter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Converter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tests/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/metadata.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,22 +62,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.Tests.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.Tests.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Tests" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Tests/bin/Debug/net8.0/Tests.exe" />
@@ -142,16 +134,16 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Tests/Program.cs</url>
-          <line>18</line>
+          <line>21</line>
           <properties documentPath="C:\Users\bravo\OneDrive\Documentos\GitHub\FunkinParser\Tests\Program.cs" containingFunctionPresentation="Method 'Main'">
             <startOffsets>
-              <option value="617" />
+              <option value="867" />
             </startOffsets>
             <endOffsets>
-              <option value="618" />
+              <option value="868" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="70" />
+          <option name="timeStamp" value="73" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
