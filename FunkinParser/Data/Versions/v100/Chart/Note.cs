@@ -28,9 +28,9 @@ namespace Funkin.Data.Versions.v100.Chart
             return CloneTyped();
         }
 
-        public bool TryConvert(out NoteData? result)
+        public NoteData Convert()
         {
-            result = new NoteData
+            return new NoteData
             {
                 Time = Time,
                 Data = Data,
@@ -41,7 +41,6 @@ namespace Funkin.Data.Versions.v100.Chart
                     new("parameter", parameter)
                 } : Array.Empty<NoteParamData>()
             };
-            return true;
         }
 
         public override string ToString()

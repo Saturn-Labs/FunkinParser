@@ -8,50 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ec85a75-a52e-4141-88e7-48020889e9a4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Attributes/MetadataDescriptorAttribute.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Attributes/PredicateIgnoreAttribute.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/ChartDataBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Converters/LegacyNoteConverter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/CharacterData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/Chart/ChartData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/Chart/EventData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/Chart/NoteData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/Chart/NoteParamData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Chart.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/ChartData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Note.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Section.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/Metadata.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayableChar.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/Metadata.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/PlayData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser.sln" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Attributes/SelectableJsonIgnoreAttribute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/ContractResolvers/SelectableJsonIgnoreContractResolver.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Converter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Converter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Converters/TimeFormatConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Converters/TimeFormatConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Converters/VersionConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Converters/VersionConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Converters/WriteIgnoreConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/IMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/MetadataBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Latest/CharacterData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Latest/Metadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/Metadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Latest/Offsets.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/Offsets.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Latest/PlayData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/PlayData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Latest/TimeChange.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/TimeChange.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Latest/TimeFormat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/Latest/TimeFormat.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/FunkinParser.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/FunkinParser.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FunkinParser/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/ChartData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/ChartData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Note.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v100/Chart/Note.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/Metadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/Metadata.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayableChar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v200/PlayableChar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/Metadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/Metadata.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/PlayData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Data/Versions/v210/PlayData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FunkinParser/Utils/Interfaces/IConvertible.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Utils/Interfaces/IConvertible.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FunkinParser/Utils/Interfaces/VersionStamp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FunkinParser/Utils/Interfaces/VersionStamp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Tests.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/chart.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/legacy-chart.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/metadata.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +75,7 @@
     ".NET Project.Tests.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "new",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -168,6 +135,7 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -177,13 +145,13 @@
           <line>18</line>
           <properties documentPath="C:\Users\bravo\OneDrive\Documentos\GitHub\FunkinParser\Tests\Program.cs" containingFunctionPresentation="Method 'Main'">
             <startOffsets>
-              <option value="590" />
+              <option value="617" />
             </startOffsets>
             <endOffsets>
-              <option value="591" />
+              <option value="618" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="69" />
+          <option name="timeStamp" value="70" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

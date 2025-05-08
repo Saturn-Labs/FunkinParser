@@ -77,27 +77,32 @@ namespace Funkin.Data.Versions.v200
             return CloneTyped();
         }
 
-        public bool TryConvert(out Latest.PlayData? result)
+        public Latest.PlayData Convert()
         {
             var newCharacters = new CharacterData("bf", "gf", "dad");
             PlayableChars.FirstOrDefault().Deconstruct(out var playerKey, out var characters);
-            if (playerKey is not null && characters is not null && characters.TryConvert(out var data))
+            if (playerKey is not null && characters is not null && characters.Convert() is { } data)
             {
-                newCharacters = data!;
+                newCharacters = data;
                 newCharacters.Player = playerKey;
             }
             
-            result = new Latest.PlayData
+            return new Latest.PlayData
             {
                 SongVariations = (string[]?)SongVariations?.Clone(),
                 Difficulties = (string[])Difficulties.Clone(),
                 // In v2.1.0, Dictionary<string, PlayableChar> is replaced with CharacterData
                 Characters = newCharacters,
                 Stage = Stage,
+                // Renamed from NoteSkin to NoteStyle since v2.2.0
                 NoteStyle = NoteSkin,
-                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>())
+                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>()),
+                // New stuff since v2.2.0
+                Ratings = new Dictionary<string, int>(),
+                Album = null,
+                PreviewStart = 0,
+                PreviewEnd = 15000
             };
-            return true;
         }
         
         /// <summary>

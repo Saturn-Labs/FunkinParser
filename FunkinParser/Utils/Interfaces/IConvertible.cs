@@ -1,22 +1,22 @@
 ﻿namespace Funkin.Utils.Interfaces
 {
-    public interface IConvertible<T1>
+    public interface IConvertible<out T1>
     {
-        bool TryConvert(out T1? result);
+        T1? Convert();
     }
     
     public interface IConvertible<T1, T2>
     {
-        bool TryConvert(out T1? result1, out T2? result2);
+        (T1?, T2?) Convert();
     }
     
     public interface IConvertible<T1, T2, T3>
     {
-        bool TryConvert(out T1? result1, out T2? result2, out T3? result3);
+        (T1?, T2?, T3?) Convert();
     }
     
     public interface IConvertible<T1, T2, T3, T4>
     {
-        bool TryConvert(out T1? result1, out T2? result2, out T3? result3, out T4? result4);
+        (T1?, T2?, T3?, T4?) Convert();
     }
 }

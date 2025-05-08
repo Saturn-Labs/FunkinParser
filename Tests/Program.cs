@@ -1,6 +1,7 @@
 ﻿
 using Funkin.Data;
 using Funkin.Data.Versions.Latest;
+using Funkin.Data.Versions.Latest.Chart;
 using Funkin.Utils.Interfaces;
 
 namespace Tests
@@ -12,10 +13,12 @@ namespace Tests
             var metadata = Converter.DeserializeMetadata(File.ReadAllText("./metadata.json"));
             if (metadata is IConvertible<Metadata> convertible)
             {
-                convertible.TryConvert(out var newMetadata);
+                var newMetadata = convertible.Convert();
                 Console.WriteLine($"Old Metadata: {metadata}");
                 Console.WriteLine($"New Metadata: {newMetadata}");
             }
+
+            var (meta, chart) = new Funkin.Data.Versions.v100.Chart.ChartData().Convert();
         }
     }
 }

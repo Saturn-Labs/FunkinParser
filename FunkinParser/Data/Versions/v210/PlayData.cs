@@ -76,9 +76,9 @@ namespace Funkin.Data.Versions.v210
             return CloneTyped();
         }
 
-        public bool TryConvert(out Latest.PlayData result)
+        public Latest.PlayData Convert()
         {
-            result = new Latest.PlayData
+            return new Latest.PlayData
             {
                 SongVariations = (string[]?)SongVariations?.Clone(),
                 Difficulties = (string[])Difficulties.Clone(),
@@ -93,7 +93,6 @@ namespace Funkin.Data.Versions.v210
                 PreviewStart = 0,
                 PreviewEnd = 15000
             };
-            return true;
         }
         
         /// <summary>

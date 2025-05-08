@@ -39,35 +39,9 @@ namespace Funkin.Data.Versions.v100.Chart
             return CloneTyped();
         }
 
-        public bool TryConvert(out Metadata? metadata, out Latest.Chart.ChartData? chartData)
+        public (Metadata, Latest.Chart.ChartData) Convert()
         {
-            metadata = null;
-            chartData = null;
-            
-            chartData = new Latest.Chart.ChartData
-            {
-                Variation = "default",
-                ScrollSpeed = new Dictionary<string, float>
-                {
-                    { DifficultyConvertKey, Song.Speed }
-                },
-                Events = Array.Empty<EventData>(),
-                Notes = new Dictionary<string, NoteData[]>
-                {
-                    {
-                        DifficultyConvertKey,
-                        Song.Sections
-                            .SelectMany(section => section.Notes)
-                            .Select(note => !note.TryConvert(out var newNote) ? null : newNote)
-                            .Where(n => n is not null)
-                            .OrderBy(n => n!.Time)
-                            .ToArray()!
-                    }
-                },
-                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>())
-            };
-                
-            metadata = new Metadata
+            var meta = new Metadata
             {
                 SongName = Song.SongName,
                 Divisions = 96,
@@ -102,8 +76,31 @@ namespace Funkin.Data.Versions.v100.Chart
                 },
                 ExtensionData = new Dictionary<string, JsonElement>(Song.ExtensionData ?? new Dictionary<string, JsonElement>())
             };
-                
-            return true;
+            
+            var chart = new Latest.Chart.ChartData
+            {
+                Variation = "default",
+                ScrollSpeed = new Dictionary<string, float>
+                {
+                    { DifficultyConvertKey, Song.Speed }
+                },
+                Events = Array.Empty<EventData>(),
+                Notes = new Dictionary<string, NoteData[]>
+                {
+                    {
+                        DifficultyConvertKey,
+                        Song.Sections
+                            .SelectMany(section => section.Notes)
+                            .Select(note => note.Convert())
+                            .Where(n => n is not null)
+                            .OrderBy(n => n!.Time)
+                            .ToArray()!
+                    }
+                },
+                ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>())
+            };
+            
+            return (meta, chart);
         }
 
         public override string ToString()

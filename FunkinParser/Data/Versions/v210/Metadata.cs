@@ -182,26 +182,25 @@ namespace Funkin.Data.Versions.v210
             return CloneTyped();
         }
 
-        public bool TryConvert(out Latest.Metadata? result)
+        public Latest.Metadata? Convert()
         {
-            if (!PlayData.TryConvert(out var playData))
+            if (PlayData.Convert() is not {} playData)
             {
-                result = null;
-                return false;
+                return null;
             }
-            
-            result = new Latest.Metadata(SongName, Artist, Variation)
+
+            return new Latest.Metadata(SongName, Artist, Variation)
             {
                 TimeFormat = TimeFormat,
                 Divisions = Divisions,
                 TimeChanges = TimeChanges.Select(c => c.CloneTyped()).ToArray(),
                 Looped = Looped,
+                // Converted PlayData to Latest
                 PlayData = playData,
                 ExtensionData = new Dictionary<string, JsonElement>(ExtensionData ?? new Dictionary<string, JsonElement>()),
                 // Added Offsets since v2.2.1
                 Offsets = new Offsets()
             };
-            return true;
         }
 
         /// <summary>

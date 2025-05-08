@@ -105,10 +105,9 @@ namespace Funkin.Data.Versions.v200
             return CloneTyped();
         }
 
-        public bool TryConvert(out CharacterData? result)
+        public CharacterData Convert()
         {
-            result = new CharacterData("bf", Girlfriend, Opponent, Instrumental);
-            return true;
+            return new CharacterData("bf", Girlfriend, Opponent, Instrumental);
         }
 
         /// <summary>
